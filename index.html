@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="திருக்குறள் — Thirukkural by Thiruvalluvar. All 1330 kurals with Tamil & English commentaries.">
+<meta property="og:title" content="திருக்குறள் — Thiruvalluvar">
+<meta property="og:description" content="All 1330 Thirukkural with commentaries by Mu. Varadarasanar, Solomon Pappaiah, Manakkudavar and G.U. Pope.">
+<title>திருக்குறள் — திருவள்ளுவர்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#1a1230;--bg2:rgba(26,18,48,.04);--bg3:rgba(26,18,48,.02);
+  --saffron:#e8922a;--saffron-lt:#fdf3e3;--sage:#2d7a6a;--rose:#c4637a;
+  --border:rgba(26,18,48,.1);--font-k:'Noto Serif Tamil','Georgia',serif;--font-ui:'Inter',sans-serif;
+  --surface:#fff;--page:#f5f2ee;
+}
+[data-dark]{
+  --ink:#ede4d4;--bg2:rgba(237,228,212,.06);--bg3:rgba(237,228,212,.03);
+  --saffron:#f0a040;--saffron-lt:#231608;--sage:#4aaa96;--rose:#e07a94;
+  --border:rgba(237,228,212,.12);--surface:#1e1630;--page:#150f25;
+}
+html,body{min-height:100%;background:var(--page);font-family:var(--font-ui);color:var(--ink);font-size:14px;transition:background .2s,color .2s}
+#app{max-width:900px;margin:0 auto;padding-bottom:3rem}
+
+.nav{display:flex;align-items:center;gap:6px;padding:.65rem 1.1rem;background:var(--surface);border-bottom:.5px solid var(--border);position:sticky;top:0;z-index:200;flex-wrap:wrap}
+.logo{font-family:var(--font-k);font-size:1rem;font-weight:600;white-space:nowrap;margin-right:2px}
+.logo em{color:var(--saffron);font-style:normal}
+.ntabs{display:flex;gap:3px;flex:1;flex-wrap:wrap}
+.nt{font-size:11.5px;padding:5px 11px;border-radius:18px;cursor:pointer;border:.5px solid transparent;color:#888;font-family:var(--font-k);transition:all .13s;white-space:nowrap}
+.nt:hover{background:var(--bg2);color:var(--ink)}
+.nt.on{background:var(--ink);color:#fff}
+[data-dark] .nt.on{background:var(--saffron);color:#1a1230}
+.ibtn{background:none;border:.5px solid var(--border);border-radius:8px;padding:5px 7px;cursor:pointer;color:#888;font-size:14px;transition:all .13s;line-height:1}
+.ibtn:hover{border-color:var(--saffron);color:var(--saffron)}
+
+.sbar{padding:.6rem 1.1rem;background:var(--surface);border-bottom:.5px solid var(--border);display:flex;gap:7px;align-items:center;position:sticky;top:49px;z-index:190}
+.swrap{position:relative;flex:1}
+.sinp{width:100%;padding:8px 36px 8px 36px;border-radius:20px;border:.5px solid var(--border);font-size:13px;background:var(--bg2);color:var(--ink);outline:none;font-family:var(--font-ui);transition:border-color .13s}
+.sinp:focus{border-color:var(--saffron)}
+.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;pointer-events:none}
+.sclear{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:#888;cursor:pointer;font-size:13px;padding:2px;display:none}
+.sclear.vis{display:block}
+.shint{font-size:11px;color:#888;white-space:nowrap;min-width:fit-content}
+.adhi-sel-wrap{position:relative}
+.adhi-sel{font-size:12px;padding:7px 28px 7px 10px;border-radius:18px;border:.5px solid var(--border);background:var(--bg2);color:var(--ink);cursor:pointer;outline:none;font-family:var(--font-k);-webkit-appearance:none;appearance:none;max-width:175px}
+.adhi-sel:focus{border-color:var(--saffron)}
+.adhi-arr{position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:11px;color:#888}
+
+.sresults{background:var(--surface);border-bottom:.5px solid var(--border)}
+.sresults.hide{display:none}
+.sr-inner{padding:.75rem 1.1rem}
+.sr-hdr{display:flex;align-items:baseline;gap:7px;margin-bottom:.75rem}
+.sr-title{font-size:.85rem;font-weight:500;color:var(--ink);font-family:var(--font-k)}
+.sr-sub{font-size:11px;color:#888;margin-left:auto}
+
+.hero{background:var(--ink);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+[data-dark] .hero{background:#100c1e}
+.h-eye{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--saffron);margin-bottom:.9rem;opacity:.85}
+.h-ghost{position:absolute;font-size:10rem;font-weight:700;color:rgba(255,255,255,.025);top:-1rem;left:50%;transform:translateX(-50%);pointer-events:none;user-select:none;white-space:nowrap;font-family:var(--font-ui)}
+.h-k{font-family:var(--font-k);font-size:1.4rem;line-height:1.85;color:#f5ece0;position:relative}
+.h-div{width:32px;height:2px;background:var(--saffron);margin:.85rem auto;border-radius:2px}
+.h-en{font-size:.82rem;color:rgba(245,236,224,.58);font-style:italic;line-height:1.65;max-width:480px;margin:0 auto .65rem}
+.h-meta{font-size:10.5px;color:var(--saffron);font-family:var(--font-k);opacity:.8}
+.h-acts{display:flex;gap:7px;justify-content:center;margin-top:1.1rem;flex-wrap:wrap}
+.btn{font-size:12px;padding:6px 15px;border-radius:18px;cursor:pointer;font-family:var(--font-ui);border:1px solid;transition:all .13s;font-weight:500}
+.bp{background:var(--saffron);color:#1a1230;border-color:var(--saffron)}
+.bp:hover{opacity:.85}
+.bg{background:transparent;color:rgba(245,236,224,.65);border-color:rgba(245,236,224,.22)}
+.bg:hover{background:rgba(255,255,255,.07)}
+
+.sec{padding:1.35rem 1.1rem}
+.shd{display:flex;align-items:center;gap:7px;margin-bottom:1.1rem;border-bottom:.5px solid var(--border);padding-bottom:.55rem;flex-wrap:wrap}
+.stit{font-size:.9rem;font-weight:500;color:var(--ink);font-family:var(--font-k)}
+.ssub{font-size:11px;color:#888;margin-left:auto}
+
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pc{border-radius:12px;padding:.9rem .85rem;cursor:pointer;border:.5px solid var(--border);transition:all .13s;background:var(--surface);overflow:hidden;position:relative}
+.pc:hover{transform:translateY(-2px);border-color:var(--saffron)}
+.pc.aram{border-top:3px solid var(--sage)}.pc.porul{border-top:3px solid var(--saffron)}.pc.inbam{border-top:3px solid var(--rose)}
+.pn{font-family:var(--font-k);font-size:.9rem;font-weight:600;color:var(--ink)}
+.pe{font-size:10.5px;color:#888;margin-top:1px}
+.pct{font-size:10px;color:#888;margin-top:5px}
+.pbg{position:absolute;right:-4px;bottom:-8px;font-size:3.2rem;opacity:.06;font-family:var(--font-k);pointer-events:none;user-select:none}
+
+.klist{display:flex;flex-direction:column;gap:9px}
+.kc{background:var(--surface);border:.5px solid var(--border);border-left:3px solid var(--saffron);border-radius:12px;padding:.9rem 1.1rem;cursor:pointer;transition:border-color .13s;position:relative;overflow:hidden}
+.kc:hover{border-left-color:var(--saffron);box-shadow:0 2px 12px rgba(232,146,42,.08)}
+.kc.aram{border-left-color:var(--sage)}.kc.porul{border-left-color:var(--saffron)}.kc.inbam{border-left-color:var(--rose)}
+.kg{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:4rem;font-weight:700;color:var(--border);font-family:var(--font-ui);pointer-events:none;user-select:none;line-height:1}
+.kn{font-size:10px;color:var(--saffron);font-weight:600;letter-spacing:.05em;margin-bottom:3px}
+.kt{font-family:var(--font-k);font-size:.95rem;line-height:1.75;color:var(--ink);margin-bottom:5px}
+.ke{font-size:11.5px;color:#888;font-style:italic;line-height:1.5}
+.ktag{font-size:10px;color:#aaa;margin-top:5px;font-family:var(--font-k)}
+
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:6px}
+.ac{padding:6px 9px;border-radius:8px;border:.5px solid var(--border);font-size:11.5px;cursor:pointer;font-family:var(--font-k);color:var(--ink);background:var(--surface);transition:all .13s;display:flex;align-items:center;gap:5px}
+.ac:hover{border-color:var(--saffron);background:var(--saffron-lt)}
+.an{font-size:9px;color:#aaa;min-width:16px;font-family:var(--font-ui)}
+.ac.aram .an{color:var(--sage)}.ac.porul .an{color:var(--saffron)}.ac.inbam .an{color:var(--rose)}
+
+.d-eye{font-size:10px;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;font-family:var(--font-ui)}
+.d-tit{font-family:var(--font-k);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.d-sub2{font-size:11.5px;color:#888;margin-bottom:1.1rem}
+.d-verse{font-family:var(--font-k);font-size:1.4rem;line-height:1.9;color:var(--ink);background:var(--saffron-lt);border-left:4px solid var(--saffron);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-bottom:.9rem;position:relative}
+.d-badge{position:absolute;top:9px;right:12px;font-size:10.5px;color:var(--saffron);font-weight:600;font-family:var(--font-ui);opacity:.65}
+.share-row{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.sbtn{font-size:11px;padding:5px 11px;border-radius:14px;cursor:pointer;border:.5px solid var(--border);background:var(--bg2);color:#888;transition:all .13s;display:flex;align-items:center;gap:4px;font-family:var(--font-ui)}
+.sbtn:hover{border-color:var(--saffron);color:var(--saffron)}
+.sbtn.ok{background:var(--sage);color:#fff;border-color:var(--sage)}
+.ctabs{display:flex;gap:4px;margin-bottom:.65rem;flex-wrap:wrap}
+.ctab{font-size:11px;padding:4px 10px;border-radius:12px;cursor:pointer;border:.5px solid var(--border);background:var(--bg2);color:#888;transition:all .12s;font-family:var(--font-ui)}
+.ctab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+[data-dark] .ctab.on{background:var(--saffron);color:#1a1230;border-color:var(--saffron)}
+.cbox{background:var(--surface);border:.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.65rem}
+.clbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--saffron);font-weight:600;margin-bottom:4px;font-family:var(--font-ui)}
+.cta{font-family:var(--font-k);font-size:.875rem;line-height:1.75;color:var(--ink)}
+.cen{font-size:.85rem;font-style:italic;color:#888;line-height:1.65}
+.ctrans{font-size:11.5px;color:#aaa;margin-top:.65rem;padding-top:.65rem;border-top:.5px solid var(--border)}
+.navbtns{display:flex;gap:7px;margin-top:1rem}
+.nb{flex:1;padding:7px;border-radius:8px;border:.5px solid var(--border);cursor:pointer;background:var(--bg2);color:var(--ink);font-size:12px;font-family:var(--font-ui);transition:all .13s;text-align:center}
+.nb:hover{border-color:var(--saffron);color:var(--saffron)}
+.nb:disabled{opacity:.3;cursor:not-allowed}
+.back{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#888;cursor:pointer;margin-bottom:1.1rem;background:none;border:none;font-family:var(--font-ui);padding:0}
+.back:hover{color:var(--ink)}
+
+.paltabs{display:flex;gap:4px;flex-wrap:wrap}
+.pt{cursor:pointer;padding:3px 10px;border-radius:11px;font-size:12px;border:.5px solid var(--border);color:#888;font-family:var(--font-k);transition:all .13s}
+.pt:hover{border-color:var(--saffron)}
+.pt.on{color:#fff;border:none}
+
+.search-fmt{font-size:11.5px;color:#888;line-height:1.9;font-family:var(--font-ui)}
+.search-fmt code{background:var(--bg2);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--ink)}
+
+.aibox{background:var(--ink);border-radius:12px;padding:1.15rem}
+[data-dark] .aibox{background:#100c1e;border:.5px solid var(--border)}
+.aihdr{display:flex;align-items:center;gap:7px;margin-bottom:.8rem}
+.aidot{width:7px;height:7px;border-radius:50%;background:var(--saffron)}
+.aitit{font-size:12px;color:rgba(245,236,224,.72);font-weight:500}
+.aimsgs{min-height:60px;max-height:220px;overflow-y:auto;margin-bottom:.8rem;display:flex;flex-direction:column;gap:6px}
+.aim{font-size:12.5px;line-height:1.6;padding:7px 10px;border-radius:9px}
+.aim.u{background:rgba(232,146,42,.18);color:#f5ece0;align-self:flex-end;max-width:80%}
+.aim.b{background:rgba(255,255,255,.06);color:rgba(245,236,224,.85);font-family:var(--font-k);align-self:flex-start;max-width:90%}
+.airow{display:flex;gap:6px}
+.aiinp{flex:1;padding:7px 12px;border-radius:17px;border:.5px solid rgba(245,236,224,.18);background:rgba(255,255,255,.06);color:#f5ece0;font-size:12px;font-family:var(--font-ui);outline:none}
+.aiinp::placeholder{color:rgba(245,236,224,.3)}
+.aiinp:focus{border-color:var(--saffron)}
+.aisend{padding:7px 13px;background:var(--saffron);border:none;border-radius:17px;color:#1a1230;font-size:12px;font-weight:600;cursor:pointer}
+.aisend:hover{opacity:.85}
+.aisend:disabled{opacity:.4;cursor:not-allowed}
+.tchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.6rem}
+.tc{font-size:11px;padding:4px 10px;border-radius:13px;cursor:pointer;border:.5px solid var(--border);background:var(--bg2);color:#888;transition:all .13s;font-family:var(--font-k)}
+.tc:hover{border-color:var(--saffron);color:var(--saffron)}
+
+.dots{display:inline-flex;gap:3px;align-items:center}
+.dots span{width:4px;height:4px;border-radius:50%;background:var(--saffron);animation:db .9s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes db{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.tp{display:none}.tp.on{display:block}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sage);color:#fff;font-size:12px;padding:8px 18px;border-radius:20px;z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* loading screen */
+.loading-screen{position:fixed;inset:0;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;transition:opacity .4s}
+.loading-screen.fade{opacity:0;pointer-events:none}
+.ls-logo{font-family:var(--font-k);font-size:2rem;color:#f5ece0;margin-bottom:.5rem}
+.ls-logo em{color:var(--saffron);font-style:normal}
+.ls-sub{font-size:12px;color:rgba(245,236,224,.45);margin-bottom:2rem}
+.ls-bar{width:200px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.ls-fill{height:100%;background:var(--saffron);width:0;transition:width .4s;border-radius:2px}
+
+@media(max-width:600px){
+  .pg{grid-template-columns:1fr 1fr}
+  .ag{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .adhi-sel{max-width:130px;font-size:11px}
+  .h-k{font-size:1.15rem}
+  .d-verse{font-size:1.15rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div class="loading-screen" id="ls">
+  <div class="ls-logo">திருக்<em>குறள்</em></div>
+  <div class="ls-sub">திருவள்ளுவர் · 1330 Kurals</div>
+  <div class="ls-bar"><div class="ls-fill" id="lsfill"></div></div>
+</div>
+
+<div id="app">
+<nav class="nav">
+  <div class="logo">திருக்<em>குறள்</em></div>
+  <div class="ntabs">
+    <div class="nt on" onclick="tab('home')">முகப்பு</div>
+    <div class="nt" onclick="tab('browse')">அதிகாரம்</div>
+    <div class="nt" onclick="tab('search')">தேடல்</div>
+    <div class="nt" onclick="tab('ai')">AI உரையாடல்</div>
+  </div>
+  <button class="ibtn" onclick="toggleDark()" id="thbtn" title="Toggle theme" aria-label="Toggle theme"><i class="ti ti-moon-stars"></i></button>
+</nav>
+
+<!-- SMART SEARCH BAR -->
+<div class="sbar">
+  <div class="swrap">
+    <i class="ti ti-search sico" aria-hidden="true"></i>
+    <input class="sinp" id="sinp" placeholder="42 · 5:3 (adhikaram:position) · keyword..." oninput="onSearch(this.value)" onkeydown="onSKey(event)" autocomplete="off" spellcheck="false"/>
+    <button class="sclear" id="sclear" onclick="clearSearch()" aria-label="Clear"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="adhi-sel-wrap">
+    <select class="adhi-sel" id="adhisel" onchange="adhiSelGo(this.value)" aria-label="Jump to adhikaram">
+      <option value="">— அதிகாரம் —</option>
+    </select>
+    <span class="adhi-arr"><i class="ti ti-chevron-down"></i></span>
+  </div>
+  <div class="shint" id="shint"></div>
+</div>
+
+<!-- SEARCH RESULTS -->
+<div class="sresults hide" id="sresults">
+  <div class="sr-inner">
+    <div class="sr-hdr"><span class="sr-title" id="srtit"></span><span class="sr-sub" id="srsub"></span></div>
+    <div class="klist" id="srlist"></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="tp on" id="tp-home">
+  <div class="hero">
+    <div class="h-eye">இன்றைய குறள் · Kural of the day</div>
+    <div class="h-ghost" id="hg">1</div>
+    <div class="h-k" id="hk">அகர முதல எழுத்தெல்லாம் ஆதி<br>பகவன் முதற்றே உலகு.</div>
+    <div class="h-div"></div>
+    <div class="h-en" id="hen">As all letters have the letter A for their first, so the world has the eternal God for its first.</div>
+    <div class="h-meta" id="hm">குறள் 1 · கடவுள் வாழ்த்து</div>
+    <div class="h-acts">
+      <button class="btn bg" onclick="randHero()"><i class="ti ti-refresh" aria-hidden="true"></i> மற்றொரு குறள்</button>
+      <button class="btn bp" onclick="heroDetail()">விரிவாக படிக்க →</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="shd"><span class="stit">முப்பால் · Three Books</span><span class="ssub">133 chapters · 1330 kurals</span></div>
+    <div class="pg">
+      <div class="pc aram" onclick="browsepal('aram')"><div class="pn">அறத்துப்பால்</div><div class="pe">Virtue · Aram</div><div class="pct">38 chapters · 380 kurals</div><div class="pbg">அ</div></div>
+      <div class="pc porul" onclick="browsepal('porul')"><div class="pn">பொருட்பால்</div><div class="pe">Wealth · Porul</div><div class="pct">70 chapters · 700 kurals</div><div class="pbg">பொ</div></div>
+      <div class="pc inbam" onclick="browsepal('inbam')"><div class="pn">காமத்துப்பால்</div><div class="pe">Love · Inbam</div><div class="pct">25 chapters · 250 kurals</div><div class="pbg">கா</div></div>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="shd"><span class="stit">பிரபல குறள்கள் · Beloved Kurals</span></div>
+    <div class="klist" id="homelist"></div>
+  </div>
+</div>
+
+<!-- BROWSE -->
+<div class="tp" id="tp-browse">
+  <div id="brw-adhi" class="sec">
+    <div class="shd">
+      <span class="paltabs" id="paltabs">
+        <span class="pt on" style="background:var(--sage)" onclick="setpal('aram')">அறம்</span>
+        <span class="pt" onclick="setpal('porul')">பொருள்</span>
+        <span class="pt" onclick="setpal('inbam')">இன்பம்</span>
+      </span>
+      <span class="ssub" id="brwcnt"></span>
+    </div>
+    <div class="ag" id="adhigrid"></div>
+  </div>
+  <div id="brw-klist" class="sec" style="display:none">
+    <button class="back" onclick="bkToAdhi()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back to chapters</button>
+    <div id="bkh"></div>
+    <div class="klist" id="bklist"></div>
+  </div>
+  <div id="brw-detail" class="sec" style="display:none">
+    <button class="back" onclick="bkToList()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+    <div id="bdc"></div>
+  </div>
+</div>
+
+<!-- SEARCH TAB -->
+<div class="tp" id="tp-search">
+  <div class="sec">
+    <div class="shd"><span class="stit">குறள் தேடல் · Search</span></div>
+    <div style="margin-bottom:.9rem;padding:.75rem;background:var(--bg2);border-radius:10px;border:.5px solid var(--border)">
+      <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:.4rem">Search formats:</div>
+      <div class="search-fmt">
+        <code>42</code> Jump to kural 42 &nbsp;·&nbsp;
+        <code>5:3</code> Adhikaram 5, position 3 (= kural 43) &nbsp;·&nbsp;
+        <code>அன்பு</code> Tamil keyword &nbsp;·&nbsp;
+        <code>love</code> English keyword
+      </div>
+    </div>
+    <div style="position:relative;margin-bottom:1rem">
+      <i class="ti ti-search sico" aria-hidden="true"></i>
+      <input class="sinp" id="sinp2" placeholder="எண் / 5:3 / keyword..." oninput="tabSearch(this.value)" style="width:100%" autocomplete="off"/>
+    </div>
+    <div class="klist" id="tslist"></div>
+    <div id="tsempty" style="display:none;color:#888;font-size:13px;padding:.75rem 0">No results found. Try a different number, format, or keyword.</div>
+  </div>
+</div>
+
+<!-- AI -->
+<div class="tp" id="tp-ai">
+  <div class="sec">
+    <div class="shd"><span class="stit">AI மூலம் ஆராயுங்கள் · Explore with AI</span></div>
+    <div class="aibox">
+      <div class="aihdr"><div class="aidot"></div><div class="aitit">Ask about any kural, theme, or Thiruvalluvar's philosophy</div></div>
+      <div class="aimsgs" id="aimsgs">
+        <div class="aim b">வணக்கம்! Ask me anything — a kural by number, a life theme, or Thiruvalluvar's philosophy. Try: <em>"What does kural 391 say?"</em> or <em>"குறள் 1 விளக்கம்"</em></div>
+      </div>
+      <div class="airow">
+        <input class="aiinp" id="aiinp" placeholder="உங்கள் கேள்வி / Your question..." onkeydown="if(event.key==='Enter')aiSend()"/>
+        <button class="aisend" id="aibtn" onclick="aiSend()">கேளு ↗</button>
+      </div>
+    </div>
+    <div style="margin-top:.9rem">
+      <div style="font-size:11px;color:#888;margin-bottom:.45rem">Quick themes:</div>
+      <div class="tchips">
+        <div class="tc" onclick="aiAsk('அன்பு — What does Thirukkural teach about love and compassion? Quote specific kural numbers.')">அன்பு · Love</div>
+        <div class="tc" onclick="aiAsk('நட்பு — What does Thirukkural say about friendship? Quote specific kurals.')">நட்பு · Friendship</div>
+        <div class="tc" onclick="aiAsk('கல்வி — Wisdom on education and learning in Thirukkural. Quote specific kurals.')">கல்வி · Education</div>
+        <div class="tc" onclick="aiAsk('வாய்மை — What does Thirukkural say about truth and honesty?')">வாய்மை · Truth</div>
+        <div class="tc" onclick="aiAsk('ஊழ் — What does Thirukkural teach about fate and karma?')">ஊழ் · Fate</div>
+        <div class="tc" onclick="aiAsk('பொறுமை — Thirukkural on patience and forbearance.')">பொறுமை · Patience</div>
+        <div class="tc" onclick="aiAsk('What makes Thirukkural universal and relevant to modern life?')">நவீன தொடர்பு</div>
+        <div class="tc" onclick="aiAsk('How do the three books Aram, Porul, Inbam of Thirukkural complement each other?')">முப்பால் விளக்கம்</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app -->
+<div class="toast" id="toast"></div>
+
+<script>
+const ADHI=[
+  {n:1,ta:'கடவுள் வாழ்த்து',en:'Prayer',p:'aram'},{n:2,ta:'வான்சிறப்பு',en:'Excellence of Rain',p:'aram'},
+  {n:3,ta:'நீத்தார் பெருமை',en:'Greatness of Ascetics',p:'aram'},{n:4,ta:'அறன்வலியுறுத்தல்',en:'Assertion of Virtue',p:'aram'},
+  {n:5,ta:'இல்வாழ்க்கை',en:'Domestic Life',p:'aram'},{n:6,ta:'வாழ்க்கைத் துணைநலம்',en:'Worth of a Wife',p:'aram'},
+  {n:7,ta:'மக்கட்பேறு',en:'Blessing of Children',p:'aram'},{n:8,ta:'அன்புடைமை',en:'Possession of Love',p:'aram'},
+  {n:9,ta:'விருந்தோம்பல்',en:'Hospitality',p:'aram'},{n:10,ta:'இனியவைகூறல்',en:'Pleasant Words',p:'aram'},
+  {n:11,ta:'செய்ந்நன்றி அறிதல்',en:'Gratitude',p:'aram'},{n:12,ta:'நடுவு நிலைமை',en:'Impartiality',p:'aram'},
+  {n:13,ta:'அடக்கமுடைமை',en:'Self-restraint',p:'aram'},{n:14,ta:'ஒழுக்கமுடைமை',en:'Propriety',p:'aram'},
+  {n:15,ta:'பிறனில் விழையாமை',en:'Not Coveting',p:'aram'},{n:16,ta:'பொறையுடைமை',en:'Forbearance',p:'aram'},
+  {n:17,ta:'அழுக்காறாமை',en:'Absence of Envy',p:'aram'},{n:18,ta:'வெஃகாமை',en:'Not Coveting',p:'aram'},
+  {n:19,ta:'புறங்கூறாமை',en:'Not Backbiting',p:'aram'},{n:20,ta:'பயனில சொல்லாமை',en:'Avoidance of Idle Words',p:'aram'},
+  {n:21,ta:'தீவினையச்சம்',en:'Dread of Sin',p:'aram'},{n:22,ta:'ஒப்புரவறிதல்',en:'Charity',p:'aram'},
+  {n:23,ta:'ஈகை',en:'Liberality',p:'aram'},{n:24,ta:'புகழ்',en:'Fame',p:'aram'},
+  {n:25,ta:'கருணை',en:'Compassion',p:'aram'},{n:26,ta:'கொல்லாமை',en:'Non-killing',p:'aram'},
+  {n:27,ta:'புலான்மறுத்தல்',en:'Abstaining from Flesh',p:'aram'},{n:28,ta:'தவம்',en:'Penance',p:'aram'},
+  {n:29,ta:'கள்ளாமை',en:'Not Stealing',p:'aram'},{n:30,ta:'வாய்மை',en:'Veracity',p:'aram'},
+  {n:31,ta:'வெகுளாமை',en:'Absence of Wrath',p:'aram'},{n:32,ta:'இன்னாசெய்யாமை',en:'Not Doing Evil',p:'aram'},
+  {n:33,ta:'கொல்லாமை',en:'Non-killing',p:'aram'},{n:34,ta:'நிலையாமை',en:'Impermanence',p:'aram'},
+  {n:35,ta:'துறவு',en:'Renunciation',p:'aram'},{n:36,ta:'மெய்யுணர்தல்',en:'Truth-Knowledge',p:'aram'},
+  {n:37,ta:'அவாவறுத்தல்',en:'Suppression of Desire',p:'aram'},{n:38,ta:'ஊழ்',en:'Fate',p:'aram'},
+  {n:39,ta:'இறைமாட்சி',en:'Kingly Qualities',p:'porul'},{n:40,ta:'கல்வி',en:'Learning',p:'porul'},
+  {n:41,ta:'கல்லாமை',en:'Ignorance',p:'porul'},{n:42,ta:'கேள்வி',en:'Listening',p:'porul'},
+  {n:43,ta:'அறிவுடைமை',en:'Wisdom',p:'porul'},{n:44,ta:'குற்றங்கடிதல்',en:'Correcting Faults',p:'porul'},
+  {n:45,ta:'பெரியாரைத் துணைக்கோடல்',en:'Seeking the Great',p:'porul'},{n:46,ta:'சிற்றினஞ்சேராமை',en:'Avoiding Low Company',p:'porul'},
+  {n:47,ta:'தெரிந்துசெயல்வகை',en:'Acting with Knowledge',p:'porul'},{n:48,ta:'வலியறிதல்',en:'Knowing Strength',p:'porul'},
+  {n:49,ta:'காலமறிதல்',en:'Knowing the Right Time',p:'porul'},{n:50,ta:'இடனறிதல்',en:'Knowing the Right Place',p:'porul'},
+  {n:51,ta:'தெரிந்துதெளிதல்',en:'Test and Trust',p:'porul'},{n:52,ta:'தெரிந்துவினையாடல்',en:'Employing Wisely',p:'porul'},
+  {n:53,ta:'சுற்றந்தழால்',en:'Cherishing Kinsmen',p:'porul'},{n:54,ta:'பொச்சாவாமை',en:'Not Forgetting',p:'porul'},
+  {n:55,ta:'செங்கோன்மை',en:'Righteous Sceptre',p:'porul'},{n:56,ta:'கொடுங்கோன்மை',en:'Tyranny',p:'porul'},
+  {n:57,ta:'வெருவந்தசெய்யாமை',en:'Not Causing Terror',p:'porul'},{n:58,ta:'கண்ணோட்டம்',en:'Benevolence',p:'porul'},
+  {n:59,ta:'ஒற்றாடல்',en:'Espionage',p:'porul'},{n:60,ta:'ஊக்கமுடைமை',en:'Energy',p:'porul'},
+  {n:61,ta:'மடியின்மை',en:'Not Being Idle',p:'porul'},{n:62,ta:'ஆள்வினையுடைமை',en:'Industry',p:'porul'},
+  {n:63,ta:'இடுக்கணழியாமை',en:'Not Yielding to Adversity',p:'porul'},{n:64,ta:'அமைச்சு',en:'Ministership',p:'porul'},
+  {n:65,ta:'சொல்வன்மை',en:'Power of Speech',p:'porul'},{n:66,ta:'வினைத்தூய்மை',en:'Purity of Action',p:'porul'},
+  {n:67,ta:'வினைத்திட்பம்',en:'Firmness in Action',p:'porul'},{n:68,ta:'வினைசெயல்வகை',en:'How to Act',p:'porul'},
+  {n:69,ta:'தூது',en:'Ambassadors',p:'porul'},{n:70,ta:'மன்னரைச் சேர்ந்தொழுதல்',en:'Conduct with Kings',p:'porul'},
+  {n:71,ta:'குறிப்பறிதல்',en:'Reading Signs',p:'porul'},{n:72,ta:'அவையறிதல்',en:'Knowing the Assembly',p:'porul'},
+  {n:73,ta:'அவையஞ்சாமை',en:'Fearlessness in Assembly',p:'porul'},{n:74,ta:'நாடு',en:'The Land',p:'porul'},
+  {n:75,ta:'அரண்',en:'The Fortress',p:'porul'},{n:76,ta:'பொருள்செயல்வகை',en:'How to Gain Wealth',p:'porul'},
+  {n:77,ta:'படைமாட்சி',en:'The Army',p:'porul'},{n:78,ta:'படைச்செருக்கு',en:'Martial Spirit',p:'porul'},
+  {n:79,ta:'நட்பு',en:'Friendship',p:'porul'},{n:80,ta:'நட்பாராய்தல்',en:'Testing Friendship',p:'porul'},
+  {n:81,ta:'பழைமை',en:'Old Friendship',p:'porul'},{n:82,ta:'தீ நட்பு',en:'Bad Company',p:'porul'},
+  {n:83,ta:'கூடாநட்பு',en:'False Friendship',p:'porul'},{n:84,ta:'பேதைமை',en:'Folly',p:'porul'},
+  {n:85,ta:'புல்லறிவாண்மை',en:'Ignorance of the Base',p:'porul'},{n:86,ta:'இகல்',en:'Hostility',p:'porul'},
+  {n:87,ta:'பகைமாட்சி',en:'Might of Enmity',p:'porul'},{n:88,ta:'பகைத்திறந்தெரிதல்',en:'Knowing the Enemy',p:'porul'},
+  {n:89,ta:'உட்பகை',en:'Internal Enemies',p:'porul'},{n:90,ta:'கூழியல்',en:'Meanness',p:'porul'},
+  {n:91,ta:'நல்குரவு',en:'Poverty',p:'porul'},{n:92,ta:'நாணுடைமை',en:'Modesty',p:'porul'},
+  {n:93,ta:'மானம்',en:'Honour',p:'porul'},{n:94,ta:'சான்றாண்மை',en:'Perfection',p:'porul'},
+  {n:95,ta:'பெரியாரைப் பிழையாமை',en:'Not Offending the Great',p:'porul'},{n:96,ta:'கயமை',en:'Baseness',p:'porul'},
+  {n:97,ta:'கள்ளுண்ணாமை',en:'Not Drinking',p:'porul'},{n:98,ta:'சூது',en:'Gambling',p:'porul'},
+  {n:99,ta:'மருந்து',en:'Medicine',p:'porul'},{n:100,ta:'குடிமை',en:'Nobility',p:'porul'},
+  {n:101,ta:'குடிசெயல்வகை',en:'Uplifting Family',p:'porul'},{n:102,ta:'மானம்',en:'Honour',p:'porul'},
+  {n:103,ta:'நன்றியில்செல்வம்',en:'Ungrateful Wealth',p:'porul'},{n:104,ta:'உழவு',en:'Agriculture',p:'porul'},
+  {n:105,ta:'நல்குரவு',en:'Poverty',p:'porul'},{n:106,ta:'இரவு',en:'Begging',p:'porul'},
+  {n:107,ta:'இரவச்சம்',en:'Dread of Begging',p:'porul'},{n:108,ta:'கயமை',en:'Meanness',p:'porul'},
+  {n:109,ta:'தகையணங்குறுத்தல்',en:'Beauty that Enslaves',p:'inbam'},{n:110,ta:'குறிப்பறிவுறுத்தல்',en:'Recognition of the Sign',p:'inbam'},
+  {n:111,ta:'புணர்ச்சிமகிழ்தல்',en:'Joy of Union',p:'inbam'},{n:112,ta:'நலம்புனைந்துரைத்தல்',en:'Praise of Beauty',p:'inbam'},
+  {n:113,ta:'காதற்சிறப்புரைத்தல்',en:'Glory of Love',p:'inbam'},{n:114,ta:'நாணுத்துறவுரைத்தல்',en:'Abandonment of Shame',p:'inbam'},
+  {n:115,ta:'அலரறிவுறுத்தல்',en:'Announcement of Rumour',p:'inbam'},{n:116,ta:'பிரிவாற்றாமை',en:'Intolerance of Separation',p:'inbam'},
+  {n:117,ta:'படர்மெலிந்திரங்கல்',en:'Complainings',p:'inbam'},{n:118,ta:'கண்விதுப்பழிதல்',en:'Eyes Reproach',p:'inbam'},
+  {n:119,ta:'பசப்புறுபருவரல்',en:'Pallor of Love-sickness',p:'inbam'},{n:120,ta:'தனிப்படர்மிகுதி',en:'Solitary Anguish',p:'inbam'},
+  {n:121,ta:'நினைந்தவர்புலம்பல்',en:'Lamentations',p:'inbam'},{n:122,ta:'கனவுநிலையுரைத்தல்',en:'Dreaming',p:'inbam'},
+  {n:123,ta:'பொழுதுகண்டிரங்கல்',en:'Lament at Dusk',p:'inbam'},{n:124,ta:'உறுப்புநலனழிதல்',en:'Wasting of Beauty',p:'inbam'},
+  {n:125,ta:'நெஞ்சொடுகிளத்தல்',en:'Communing with Heart',p:'inbam'},{n:126,ta:'நிறையழிதல்',en:'Loss of Composure',p:'inbam'},
+  {n:127,ta:'அவர்வயின்விதும்பல்',en:'Yearning',p:'inbam'},{n:128,ta:'குறிப்பறிதல்',en:'Reading the Signs',p:'inbam'},
+  {n:129,ta:'புணர்ச்சிவிதும்பல்',en:'Longing for Union',p:'inbam'},{n:130,ta:'நெஞ்சொடுபுலத்தல்',en:'Expostulation with Heart',p:'inbam'},
+  {n:131,ta:'புலவி',en:'Sulking',p:'inbam'},{n:132,ta:'புலவி நுணுக்கம்',en:'The Delicate Sulk',p:'inbam'},
+  {n:133,ta:'ஊடலுவகை',en:'Joy of Lovers Quarrels',p:'inbam'}
+];
+
+function buildDropdown(){
+  const sel=document.getElementById('adhisel');
+  const sorted=[...ADHI].sort((a,b)=>a.ta.localeCompare(b.ta,'ta'));
+  const pl={aram:'அறம்',porul:'பொருள்',inbam:'இன்பம்'};
+  sorted.forEach(a=>{const o=document.createElement('option');o.value=a.n;o.textContent=`${a.n}. ${a.ta} (${pl[a.p]})`;sel.appendChild(o);});
+}
+function adhiSelGo(v){if(!v)return;document.getElementById('adhisel').value='';tab('browse');showAdhiKurals(parseInt(v));}
+
+function parseSearch(v){
+  v=v.trim();
+  const cm=v.match(/^(\d+)[:\.](\d+)$/);
+  if(cm){const a=parseInt(cm[1]),p=parseInt(cm[2]);if(a>=1&&a<=133&&p>=1&&p<=10)return{type:'adhipos',adhi:a,pos:p,num:(a-1)*10+p};}
+  const n=parseInt(v);
+  if(!isNaN(n)&&String(n)===v&&n>=1&&n<=1330)return{type:'num',num:n};
+  if(v.length>=1)return{type:'kw',q:v};
+  return null;
+}
+
+let KDB=[], curPal='aram', curAdhi=null, heroN=1, aiHistory=[], isDark=false;
+
+async function loadData(){
+  const fill=document.getElementById('lsfill');
+  fill.style.width='30%';
+  try{
+    const r=await fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json');
+    fill.style.width='70%';
+    const d=await r.json();
+    KDB=d.kural;
+    fill.style.width='100%';
+    setTimeout(()=>{
+      document.getElementById('ls').classList.add('fade');
+      setTimeout(()=>document.getElementById('ls').style.display='none',400);
+    },300);
+    renderHome();renderAdhi('aram');buildDropdown();
+    showToast('1330 குறள்கள் தயார் ✓');
+  }catch(e){
+    KDB=FALLBACK;
+    document.getElementById('ls').classList.add('fade');
+    setTimeout(()=>document.getElementById('ls').style.display='none',400);
+    renderHome();renderAdhi('aram');buildDropdown();
+  }
+}
+
+function pal(n){return n<=380?'aram':n<=1080?'porul':'inbam'}
+function adhin(n){return Math.ceil(n/10)}
+function adhita(n){const a=ADHI.find(x=>x.n===n);return a?a.ta:''}
+function adhien(n){const a=ADHI.find(x=>x.n===n);return a?a.en:''}
+
+function kcHTML(k,oc){
+  const p=pal(k.Number),an=adhita(adhin(k.Number));
+  const pl=p==='aram'?'அறம்':p==='porul'?'பொருள்':'இன்பம்';
+  return `<div class="kc ${p}" onclick="${oc}">
+    <div class="kg">${k.Number}</div>
+    <div class="kn">குறள் ${k.Number}</div>
+    <div class="kt">${k.Line1}<br>${k.Line2}</div>
+    <div class="ke">${k.explanation||k.Translation||''}</div>
+    <div class="ktag">${an} · ${pl}</div>
+  </div>`;
+}
+
+function renderHome(){
+  const picks=[1,71,391,1081].map(n=>KDB.find(k=>k.Number===n)).filter(Boolean);
+  document.getElementById('homelist').innerHTML=picks.map(k=>kcHTML(k,`openDetail(${k.Number})`)).join('');
+  if(KDB[0])setHero(KDB[0]);
+}
+function setHero(k){
+  heroN=k.Number;
+  document.getElementById('hg').textContent=k.Number;
+  document.getElementById('hk').innerHTML=k.Line1+'<br>'+k.Line2;
+  document.getElementById('hen').textContent=k.explanation||k.Translation||'';
+  document.getElementById('hm').textContent=`குறள் ${k.Number} · ${adhita(adhin(k.Number))}`;
+}
+function randHero(){if(KDB.length)setHero(KDB[Math.floor(Math.random()*KDB.length)])}
+function heroDetail(){openDetail(heroN)}
+
+function renderAdhi(p){
+  curPal=p;
+  const list=ADHI.filter(a=>a.p===p);
+  document.getElementById('brwcnt').textContent=list.length+' chapters';
+  const pts=document.querySelectorAll('.pt');
+  const pals=['aram','porul','inbam'];
+  const cols={aram:'var(--sage)',porul:'var(--saffron)',inbam:'var(--rose)'};
+  pts.forEach((t,i)=>{const on=pals[i]===p;t.classList.toggle('on',on);t.style.background=on?cols[p]:'none';t.style.color=on?'#fff':'';});
+  document.getElementById('adhigrid').innerHTML=list.map(a=>`<div class="ac ${a.p}" onclick="showAdhiKurals(${a.n})"><span class="an">${a.n}</span>${a.ta}</div>`).join('');
+}
+function setpal(p){renderAdhi(p);show('brw-adhi');hide('brw-klist');hide('brw-detail');}
+function browsepal(p){tab('browse');renderAdhi(p);}
+function show(id){document.getElementById(id).style.display='block'}
+function hide(id){document.getElementById(id).style.display='none'}
+
+function showAdhiKurals(n){
+  curAdhi=n;
+  const s=(n-1)*10+1,e=n*10;
+  const ks=KDB.filter(k=>k.Number>=s&&k.Number<=e);
+  const a=ADHI.find(x=>x.n===n);
+  const pn=a.p==='aram'?'அறத்துப்பால்':a.p==='porul'?'பொருட்பால்':'காமத்துப்பால்';
+  document.getElementById('bkh').innerHTML=`<div class="d-eye">${pn}</div><div class="d-tit">${a.ta}</div><div class="d-sub2">${a.en} · Chapter ${n}</div>`;
+  document.getElementById('bklist').innerHTML=ks.map(k=>kcHTML(k,`showBrwDetail(${k.Number})`)).join('');
+  hide('brw-adhi');show('brw-klist');hide('brw-detail');
+}
+function bkToAdhi(){show('brw-adhi');hide('brw-klist');hide('brw-detail');}
+function bkToList(){show('brw-klist');hide('brw-detail');}
+function showBrwDetail(n){const k=KDB.find(x=>x.Number===n);if(!k)return;document.getElementById('bdc').innerHTML=detailHTML(k);hide('brw-klist');show('brw-detail');}
+
+function openDetail(n){
+  const k=KDB.find(x=>x.Number===n);if(!k)return;
+  tab('browse');hide('brw-adhi');hide('brw-klist');show('brw-detail');
+  document.getElementById('bdc').innerHTML=detailHTML(k);
+  document.getElementById('brw-detail').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function detailHTML(k){
+  const p=pal(k.Number),a=adhin(k.Number);
+  const pn=p==='aram'?'அறத்துப்பால்':p==='porul'?'பொருட்பால்':'காமத்துப்பால்';
+  const st=(k.Number+'\n'+k.Line1+'\n'+k.Line2+'\n\n'+(k.explanation||k.Translation||'')+'\n\n— திருவள்ளுவர்').replace(/\\/g,'\\\\').replace(/`/g,'\\`');
+  const prev=k.Number>1?`<button class="nb" onclick="navK(${k.Number-1})">← குறள் ${k.Number-1}</button>`:`<button class="nb" disabled>← 1</button>`;
+  const next=k.Number<1330?`<button class="nb" onclick="navK(${k.Number+1})">குறள் ${k.Number+1} →</button>`:`<button class="nb" disabled>1330 →</button>`;
+  return `<div class="d-eye">${pn} · ${adhita(a)}</div>
+    <div class="d-tit">குறள் ${k.Number}</div>
+    <div class="d-sub2">${adhien(a)} · Chapter ${a}</div>
+    <div class="d-verse"><div class="d-badge"># ${k.Number}</div>${k.Line1}<br>${k.Line2}</div>
+    <div class="share-row">
+      <button class="sbtn" id="cpb${k.Number}" onclick="copyK(${k.Number},\`${st}\`,this)"><i class="ti ti-copy"></i> Copy</button>
+      <button class="sbtn" onclick="shareK(${k.Number},\`${st}\`)"><i class="ti ti-share"></i> Share</button>
+      <button class="sbtn" onclick="aiAbout(${k.Number})"><i class="ti ti-message"></i> Ask AI</button>
+    </div>
+    <div class="ctabs" id="ct${k.Number}">
+      <div class="ctab on" onclick="swC(${k.Number},'all')">All</div>
+      <div class="ctab" onclick="swC(${k.Number},'mv')">மு.வ</div>
+      <div class="ctab" onclick="swC(${k.Number},'sp')">சாலமன்</div>
+      ${k.mk?`<div class="ctab" onclick="swC(${k.Number},'mk')">மணக்குடவர்</div>`:''}
+      <div class="ctab" onclick="swC(${k.Number},'en')">English</div>
+    </div>
+    <div id="cv${k.Number}">
+      <div class="cbox" data-c="mv"><div class="clbl">மு. வரதராசனார்</div><div class="cta">${k.mv||'—'}</div></div>
+      <div class="cbox" data-c="sp"><div class="clbl">சாலமன் பாப்பையா</div><div class="cta">${k.sp||'—'}</div></div>
+      ${k.mk?`<div class="cbox" data-c="mk"><div class="clbl">மணக்குடவர்</div><div class="cta">${k.mk}</div></div>`:''}
+      <div class="cbox" data-c="en"><div class="clbl">G.U. Pope (English)</div><div class="cen">${k.explanation||k.Translation||'—'}</div></div>
+    </div>
+    <div class="ctrans"><i class="ti ti-language"></i> ${k.transliteration1||''} / ${k.transliteration2||''}</div>
+    <div class="navbtns">${prev}${next}</div>`;
+}
+
+function navK(n){const k=KDB.find(x=>x.Number===n);if(!k)return;document.getElementById('bdc').innerHTML=detailHTML(k);document.getElementById('brw-detail').scrollIntoView({behavior:'smooth',block:'start'});}
+function swC(n,f){
+  const tabs=document.querySelectorAll(`#ct${n} .ctab`);
+  const keys=['all','mv','sp','mk','en'];
+  tabs.forEach((t,i)=>t.classList.toggle('on',keys[i]===f||(f==='all'&&i===0)));
+  document.querySelectorAll(`#cv${n} .cbox`).forEach(b=>{b.style.display=(f==='all'||b.dataset.c===f)?'block':'none';});
+}
+
+function copyK(n,text,btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.classList.add('ok');btn.innerHTML='<i class="ti ti-check"></i> Copied!';
+    showToast('குறள் நகலெடுக்கப்பட்டது ✓');
+    setTimeout(()=>{btn.classList.remove('ok');btn.innerHTML='<i class="ti ti-copy"></i> Copy';},2000);
+  }).catch(()=>{try{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied ✓');}catch(e){}});
+}
+function shareK(n,text){if(navigator.share)navigator.share({title:`Thirukkural ${n}`,text});else copyK(n,text,{classList:{add:()=>{},remove:()=>{}},innerHTML:''});}
+function aiAbout(n){tab('ai');document.getElementById('aiinp').value=`குறள் ${n} பொருளும் விளக்கமும் — Explain kural ${n} in detail`;aiSend();}
+
+function onSearch(v){
+  document.getElementById('sclear').classList.toggle('vis',v.length>0);
+  const hint=document.getElementById('shint'),res=document.getElementById('sresults');
+  if(!v.trim()){hint.textContent='';res.classList.add('hide');return;}
+  const p=parseSearch(v);
+  if(!p){hint.textContent='';res.classList.add('hide');return;}
+  if(p.type==='num'){hint.textContent=`↵ Jump to kural ${p.num}`;showSR([KDB.find(k=>k.Number===p.num)].filter(Boolean),`குறள் ${p.num}`,'');}
+  else if(p.type==='adhipos'){hint.textContent=`↵ Ch.${p.adhi} pos.${p.pos} = kural ${p.num}`;showSR([KDB.find(k=>k.Number===p.num)].filter(Boolean),`${adhita(p.adhi)} #${p.pos}`,'');}
+  else{hint.textContent='';const r=doSearch(v.trim(),8);showSR(r,`"${v.trim()}"`,r.length+' found');}
+}
+function onSKey(e){
+  if(e.key==='Enter'){const v=document.getElementById('sinp').value.trim(),p=parseSearch(v);if(p&&(p.type==='num'||p.type==='adhipos')){clearSearch();openDetail(p.num);}}
+  if(e.key==='Escape')clearSearch();
+}
+function clearSearch(){document.getElementById('sinp').value='';document.getElementById('sclear').classList.remove('vis');document.getElementById('shint').textContent='';document.getElementById('sresults').classList.add('hide');}
+function showSR(ks,title,sub){
+  const res=document.getElementById('sresults');
+  if(!ks.length){res.classList.add('hide');return;}
+  document.getElementById('srtit').textContent=title;
+  document.getElementById('srsub').textContent=sub;
+  document.getElementById('srlist').innerHTML=ks.map(k=>kcHTML(k,`clearSearch();openDetail(${k.Number})`)).join('');
+  res.classList.remove('hide');
+}
+function doSearch(v,lim){
+  if(!KDB.length)return[];
+  const vl=v.toLowerCase(),n=parseInt(v);let r=[];
+  if(!isNaN(n)&&n>=1&&n<=1330){const e=KDB.find(k=>k.Number===n);if(e)r.push(e);}
+  const txt=KDB.filter(k=>!r.find(x=>x.Number===k.Number)&&(
+    k.Line1.includes(v)||k.Line2.includes(v)||
+    (k.mv&&k.mv.includes(v))||(k.sp&&k.sp.includes(v))||(k.mk&&k.mk.includes(v))||
+    (k.explanation&&k.explanation.toLowerCase().includes(vl))||(k.Translation&&k.Translation.toLowerCase().includes(vl))||
+    adhita(adhin(k.Number)).includes(v)||adhien(adhin(k.Number)).toLowerCase().includes(vl)
+  ));
+  r.push(...txt.slice(0,lim-r.length));
+  return r.slice(0,lim);
+}
+
+function tabSearch(v){
+  const list=document.getElementById('tslist'),empty=document.getElementById('tsempty');
+  if(!v.trim()){list.innerHTML='';empty.style.display='none';return;}
+  const p=parseSearch(v.trim());
+  if(p&&(p.type==='num'||p.type==='adhipos')){const k=KDB.find(x=>x.Number===p.num);list.innerHTML=k?kcHTML(k,`openDetail(${k.Number})`):'';empty.style.display=k?'none':'block';}
+  else{const r=doSearch(v.trim(),15);list.innerHTML=r.map(k=>kcHTML(k,`openDetail(${k.Number})`)).join('');empty.style.display=r.length?'none':'block';}
+}
+
+function tab(t){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nt').forEach(n=>n.classList.remove('on'));
+  document.getElementById('tp-'+t).classList.add('on');
+  ['home','browse','search','ai'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
+  clearSearch();
+}
+
+function toggleDark(){
+  isDark=!isDark;
+  document.documentElement.toggleAttribute('data-dark',isDark);
+  document.getElementById('thbtn').innerHTML=isDark?'<i class="ti ti-sun"></i>':'<i class="ti ti-moon-stars"></i>';
+}
+
+async function aiSend(){
+  const inp=document.getElementById('aiinp'),btn=document.getElementById('aibtn');
+  const q=inp.value.trim();if(!q)return;
+  inp.value='';btn.disabled=true;
+  addAI(q,'u');
+  const lid=addAI('<div class="dots"><span></span><span></span><span></span></div>','b');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`You are a warm, knowledgeable guide to Thirukkural by Thiruvalluvar. Answer questions about kurals, their meanings, commentators (Parimelazhagar, Mu. Varadarasanar, Solomon Pappaiah, Manakkudavar), themes, and modern relevance. When quoting kurals mention kural numbers. Keep responses 3-5 sentences. Respond in the same language the user writes — Tamil or English.`,
+        messages:[...aiHistory,{role:'user',content:q}]
+      })
+    });
+    const d=await r.json();
+    const reply=d.content?.find(b=>b.type==='text')?.text||'மன்னிக்கவும், மீண்டும் முயற்சிக்கவும்.';
+    removeAI(lid);addAI(reply,'b');
+    aiHistory.push({role:'user',content:q},{role:'assistant',content:reply});
+    if(aiHistory.length>12)aiHistory=aiHistory.slice(-12);
+  }catch(e){removeAI(lid);addAI('Connection error. Please try again.','b');}
+  btn.disabled=false;
+}
+let mid=0;
+function addAI(t,r){const id='m'+(++mid),el=document.createElement('div');el.className='aim '+r;el.id=id;el.innerHTML=t;document.getElementById('aimsgs').appendChild(el);el.scrollIntoView({behavior:'smooth',block:'end'});return id;}
+function removeAI(id){const e=document.getElementById(id);if(e)e.remove();}
+function aiAsk(t){tab('ai');document.getElementById('aiinp').value=t;aiSend();}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+const FALLBACK=[
+  {Number:1,Line1:'அகர முதல எழுத்தெல்லாம் ஆதி',Line2:'பகவன் முதற்றே உலகு.',mv:'எழுத்துக்கள் எல்லாம் அகரத்தை அடிப்படையாக கொண்டிருக்கின்றன. அதுபோல உலகம் கடவுளை அடிப்படையாக கொண்டிருக்கிறது.',sp:'எழுத்துக்கள் எல்லாம் அகரத்தில் தொடங்குகின்றன; (அது போல) உலகம் கடவுளில் தொடங்குகிறது.',explanation:'As all letters have the letter A for their first, so the world has the eternal God for its first.',Translation:'A leads letters; the Ancient Lord leads the world',transliteration1:'Akara Mudhala Ezhuththellaam Aadhi',transliteration2:'Pakavan Mudhatre Ulaku'},
+  {Number:71,Line1:'அன்பிற்கும் உண்டோ அடைக்குந்தாழ் ஆர்வல்லார்',Line2:'புன்கணீர் பூசல் தரும்.',mv:'அன்பிற்கும் தாழ் போட முடியுமா? அன்பர்களின் கண்ணீர் கதவைத் திறக்கும்.',sp:'அன்பிற்கு தாழ் போட முடியாது.',explanation:'Is there a lock for love? The tears of the beloved open any door.',Translation:'Love needs no lock; tears open all doors',transliteration1:'Anbirkum Undo',transliteration2:'Punkanneer Poosal'},
+  {Number:391,Line1:'கற்க கசடறக் கற்பவை கற்றபின்',Line2:'நிற்க அதற்குத் தக.',mv:'கற்கவேண்டியவற்றை குற்றமற கற்க; கற்றதற்கு ஏற்றவாறு நடக்க.',sp:'கற்கவேண்டியவற்றை குற்றமின்றிக் கற்று, கற்றதற்கு ஏற்ப வாழ்க.',explanation:'Learn thoroughly what is worth learning; then live accordingly.',Translation:'Learn what is worth learning; live accordingly.',transliteration1:'Karka Kasadara',transliteration2:'Nirka Adharkku Tha'},
+  {Number:1081,Line1:'அணங்குகொல் ஆய்மயில் கொல்லோ கனங்குழை',Line2:'மாதர்கொல் மாலும் என் நெஞ்சு.',mv:'தெய்வப் பெண்ணோ! மயிலோ, என் நெஞ்சம் மயங்குகின்றதே.',sp:'அது தெய்வமா? மயிலா? பெண்ணா? என் மனம் மயங்குகிறது.',explanation:'Is this jewelled female a celestial, a peahen, or a woman? My mind is perplexed.',Translation:'Goddess? Peacock? Woman? My mind is perplexed.',transliteration1:'Anangukol Aaimayil',transliteration2:'Maadharkol Maalum'}
+];
+
+loadData();
+</script>
+</body>
+</html>
