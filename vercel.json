@@ -1,6 +1,12 @@
 {
   "version": 2,
   "name": "thirukkural",
-  "builds": [{ "src": "index.html", "use": "@vercel/static" }],
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }]
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "commentaries.json", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/commentaries.json", "dest": "/commentaries.json" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

@@ -435,14 +435,10 @@ async function loadData(){
   const fill=document.getElementById('lsfill');
   fill.style.width='20%';
   try{
-    const [r1,r2]=await Promise.all([
-      fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json'),
-      fetch('/commentaries.json')
-    ]);
-    fill.style.width='70%';
-    const [d1,d2]=await Promise.all([r1.json(),r2.json()]);
+    const r1=await fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json');
+    fill.style.width='60%';
+    const d1=await r1.json();
     KDB=d1.kural;
-    CDB=d2;
     fill.style.width='100%';
     setTimeout(()=>{document.getElementById('ls').classList.add('fade');setTimeout(()=>document.getElementById('ls').style.display='none',400);},300);
     renderHome();renderAdhi('aram');buildDropdown();
@@ -453,6 +449,7 @@ async function loadData(){
     setTimeout(()=>document.getElementById('ls').style.display='none',400);
     renderHome();renderAdhi('aram');buildDropdown();
   }
+  fetch('/commentaries.json').then(r=>r.json()).then(d=>{CDB=d;}).catch(()=>{});
 }
 
 function pal(n){return n<=380?'aram':n<=1080?'porul':'inbam'}
@@ -475,7 +472,7 @@ function kcHTML(k,oc){
 function renderHome(){
   const picks=[1,71,391,1081].map(n=>KDB.find(k=>k.Number===n)).filter(Boolean);
   document.getElementById('homelist').innerHTML=picks.map(k=>kcHTML(k,`openDetail(${k.Number})`)).join('');
-  if(KDB[0])setHero(KDB[0]);
+  if(KDB.length)setHero(KDB[Math.floor(Math.random()*KDB.length)]);
 }
 function setHero(k){heroN=k.Number;document.getElementById('hg').textContent=k.Number;document.getElementById('hk').innerHTML=k.Line1+'<br>'+k.Line2;document.getElementById('hen').textContent=k.explanation||k.Translation||'';document.getElementById('hm').textContent=`குறள் ${k.Number} · ${adhita(adhin(k.Number))}`;}
 function randHero(){if(KDB.length)setHero(KDB[Math.floor(Math.random()*KDB.length)])}
