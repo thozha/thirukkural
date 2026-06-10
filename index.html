@@ -440,7 +440,7 @@ function renderAdhi(p){
   document.getElementById('adhigrid').innerHTML=list.map(a=>`<div class="ac ${a.p}" onclick="showAdhiKurals(${a.n})"><span class="an">${a.n}</span>${a.ta}</div>`).join('');
 }
 function setpal(p){renderAdhi(p);show('brw-adhi');hide('brw-klist');hide('brw-detail');}
-function browsepal(p){tab('browse');renderAdhi(p);}
+function browsepal(p){tab('browse');renderAdhi(p);history.pushState(null,'','#pal/'+p);}
 function show(id){document.getElementById(id).style.display='block'}
 function hide(id){document.getElementById(id).style.display='none'}
 
@@ -467,6 +467,7 @@ function openDetail(n,noPush){
 function routeHash(h){
   const m=h.match(/^#kural\/(\d+)$/);if(m){openDetail(parseInt(m[1]),true);return;}
   const a=h.match(/^#adhi\/(\d+)$/);if(a){tab('browse');showAdhiKurals(parseInt(a[1]),true);return;}
+  const pl=h.match(/^#pal\/(aram|porul|inbam)$/);if(pl){tab('browse');renderAdhi(pl[1]);return;}
   if(h==='#browse'){tab('browse');return;}
   if(h==='#search'){tab('search');return;}
 }
