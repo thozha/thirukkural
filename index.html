@@ -541,7 +541,11 @@ function copyK(n,text,btn){
     setTimeout(()=>{btn.classList.remove('ok');btn.innerHTML='<i class="ti ti-copy"></i> Copy';},2000);
   }).catch(()=>{try{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied ✓');}catch(e){}});
 }
-function shareK(n,text){if(navigator.share)navigator.share({title:`Thirukkural ${n}`,text});else copyK(n,text,{classList:{add:()=>{},remove:()=>{}},innerHTML:''});}
+function shareK(n,text){
+  const url=location.origin+location.pathname+'#kural/'+n;
+  if(navigator.share){navigator.share({title:`Thirukkural ${n}`,text,url});}
+  else{navigator.clipboard.writeText(url).then(()=>showToast('இணைப்பு நகலெடுக்கப்பட்டது ✓')).catch(()=>showToast(url));}
+}
 function aiAbout(n){
   const k=KDB.find(x=>x.Number===n);
   const verse=k?`${k.Line1} ${k.Line2}`:'';
