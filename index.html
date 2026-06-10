@@ -146,26 +146,6 @@ html,body{min-height:100%;background:var(--page);font-family:var(--font-ui);colo
 .pt{cursor:pointer;padding:3px 10px;border-radius:11px;font-size:12px;border:.5px solid var(--border);color:#888;font-family:var(--font-k);transition:all .13s}
 .pt.on{color:#fff;border:none}
 
-/* AI CHAT TAB */
-.aibox{background:var(--ink);border-radius:12px;padding:1.15rem}
-[data-dark] .aibox{background:#100c1e;border:.5px solid var(--border)}
-.aihdr{display:flex;align-items:center;gap:7px;margin-bottom:.8rem}
-.aidot{width:7px;height:7px;border-radius:50%;background:var(--saffron)}
-.aitit{font-size:12px;color:rgba(245,236,224,.72);font-weight:500}
-.aimsgs{min-height:60px;max-height:240px;overflow-y:auto;margin-bottom:.8rem;display:flex;flex-direction:column;gap:6px}
-.aim{font-size:12.5px;line-height:1.6;padding:7px 10px;border-radius:9px}
-.aim.u{background:rgba(232,146,42,.18);color:#f5ece0;align-self:flex-end;max-width:80%}
-.aim.b{background:rgba(255,255,255,.06);color:rgba(245,236,224,.85);font-family:var(--font-k);align-self:flex-start;max-width:90%}
-.airow{display:flex;gap:6px}
-.aiinp{flex:1;padding:7px 12px;border-radius:17px;border:.5px solid rgba(245,236,224,.18);background:rgba(255,255,255,.06);color:#f5ece0;font-size:12px;font-family:var(--font-ui);outline:none}
-.aiinp::placeholder{color:rgba(245,236,224,.3)}
-.aiinp:focus{border-color:var(--saffron)}
-.aisend{padding:7px 13px;background:var(--saffron);border:none;border-radius:17px;color:#1a1230;font-size:12px;font-weight:600;cursor:pointer}
-.aisend:hover{opacity:.85}
-.aisend:disabled{opacity:.4;cursor:not-allowed}
-.tchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:.6rem}
-.tc{font-size:11px;padding:4px 10px;border-radius:13px;cursor:pointer;border:.5px solid var(--border);background:var(--bg2);color:#888;transition:all .13s;font-family:var(--font-k)}
-.tc:hover{border-color:var(--saffron);color:var(--saffron)}
 
 .search-fmt{font-size:11.5px;color:#888;line-height:1.9}
 .search-fmt code{background:var(--bg2);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--ink)}
@@ -206,7 +186,6 @@ html,body{min-height:100%;background:var(--page);font-family:var(--font-ui);colo
     <div class="nt on" onclick="tab('home')">முகப்பு</div>
     <div class="nt" onclick="tab('browse')">அதிகாரம்</div>
     <div class="nt" onclick="tab('search')">தேடல்</div>
-    <div class="nt" onclick="tab('ai')">AI உரையாடல்</div>
   </div>
   <button class="ibtn" onclick="toggleDark()" id="thbtn" title="Toggle theme"><i class="ti ti-moon-stars"></i></button>
 </nav>
@@ -308,34 +287,6 @@ html,body{min-height:100%;background:var(--page);font-family:var(--font-ui);colo
 </div>
 
 <!-- AI CHAT -->
-<div class="tp" id="tp-ai">
-  <div class="sec">
-    <div class="shd"><span class="stit">AI மூலம் ஆராயுங்கள் · Explore with AI</span></div>
-    <div class="aibox">
-      <div class="aihdr"><div class="aidot"></div><div class="aitit">Ask about any kural, theme, or Thiruvalluvar's philosophy</div></div>
-      <div class="aimsgs" id="aimsgs">
-        <div class="aim b">வணக்கம்! Ask me about any kural by number, a theme, or Thiruvalluvar's philosophy. Try: <em>"குறள் 391 விளக்கம்"</em> or <em>"What does Thirukkural say about anger?"</em></div>
-      </div>
-      <div class="airow">
-        <input class="aiinp" id="aiinp" placeholder="உங்கள் கேள்வி / Your question..." onkeydown="if(event.key==='Enter')aiSend()"/>
-        <button class="aisend" id="aibtn" onclick="aiSend()">கேளு ↗</button>
-      </div>
-    </div>
-    <div style="margin-top:.9rem">
-      <div style="font-size:11px;color:#888;margin-bottom:.45rem">Quick themes:</div>
-      <div class="tchips">
-        <div class="tc" onclick="aiAsk('அன்பு — What does Thirukkural teach about love and compassion? Quote specific kural numbers.')">அன்பு · Love</div>
-        <div class="tc" onclick="aiAsk('நட்பு — What does Thirukkural say about friendship?')">நட்பு · Friendship</div>
-        <div class="tc" onclick="aiAsk('கல்வி — Wisdom on education in Thirukkural. Quote specific kurals.')">கல்வி · Education</div>
-        <div class="tc" onclick="aiAsk('வாய்மை — What does Thirukkural say about truth and honesty?')">வாய்மை · Truth</div>
-        <div class="tc" onclick="aiAsk('ஊழ் — What does Thirukkural teach about fate and karma?')">ஊழ் · Fate</div>
-        <div class="tc" onclick="aiAsk('பொறுமை — Thirukkural on patience and forbearance.')">பொறுமை · Patience</div>
-        <div class="tc" onclick="aiAsk('What makes Thirukkural universal and relevant to modern life?')">நவீன தொடர்பு</div>
-        <div class="tc" onclick="aiAsk('How do the three books Aram, Porul, Inbam of Thirukkural complement each other?')">முப்பால் விளக்கம்</div>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -429,7 +380,7 @@ function parseSearch(v){
   return null;
 }
 
-let KDB=[], CDB={}, curPal='aram', heroN=1, aiHistory=[], isDark=false;
+let KDB=[], CDB={}, curPal='aram', heroN=1, isDark=false;
 
 async function loadData(){
   const fill=document.getElementById('lsfill');
@@ -442,12 +393,14 @@ async function loadData(){
     fill.style.width='100%';
     setTimeout(()=>{document.getElementById('ls').classList.add('fade');setTimeout(()=>document.getElementById('ls').style.display='none',400);},300);
     renderHome();renderAdhi('aram');buildDropdown();
+    if(location.hash)routeHash(location.hash);
     showToast('1330 குறள்கள் தயார் ✓');
   }catch(e){
     if(!KDB.length)KDB=FALLBACK;
     document.getElementById('ls').classList.add('fade');
     setTimeout(()=>document.getElementById('ls').style.display='none',400);
     renderHome();renderAdhi('aram');buildDropdown();
+    if(location.hash)routeHash(location.hash);
   }
   fetch('/commentaries.json').then(r=>r.json()).then(d=>{CDB=d;}).catch(()=>{});
 }
@@ -491,23 +444,33 @@ function browsepal(p){tab('browse');renderAdhi(p);}
 function show(id){document.getElementById(id).style.display='block'}
 function hide(id){document.getElementById(id).style.display='none'}
 
-function showAdhiKurals(n){
+function showAdhiKurals(n,noPush){
   const s=(n-1)*10+1,e=n*10,ks=KDB.filter(k=>k.Number>=s&&k.Number<=e);
   const a=ADHI.find(x=>x.n===n),pn=a.p==='aram'?'அறத்துப்பால்':a.p==='porul'?'பொருட்பால்':'காமத்துப்பால்';
   document.getElementById('bkh').innerHTML=`<div class="d-eye">${pn}</div><div class="d-tit">${a.ta}</div><div class="d-sub2">${a.en} · Chapter ${n}</div>`;
-  document.getElementById('bklist').innerHTML=ks.map(k=>kcHTML(k,`showBrwDetail(${k.Number})`)).join('');
+  document.getElementById('bklist').innerHTML=ks.map(k=>kcHTML(k,`openDetail(${k.Number})`)).join('');
   hide('brw-adhi');show('brw-klist');hide('brw-detail');
+  if(!noPush)history.pushState(null,'','#adhi/'+n);
 }
-function bkToAdhi(){show('brw-adhi');hide('brw-klist');hide('brw-detail');}
+function bkToAdhi(){show('brw-adhi');hide('brw-klist');hide('brw-detail');history.pushState(null,'','#browse');}
 function bkToList(){show('brw-klist');hide('brw-detail');}
 function showBrwDetail(n){const k=KDB.find(x=>x.Number===n);if(!k)return;document.getElementById('bdc').innerHTML=detailHTML(k);hide('brw-klist');show('brw-detail');}
 
-function openDetail(n){
+function openDetail(n,noPush){
   const k=KDB.find(x=>x.Number===n);if(!k)return;
   tab('browse');hide('brw-adhi');hide('brw-klist');show('brw-detail');
   document.getElementById('bdc').innerHTML=detailHTML(k);
   document.getElementById('brw-detail').scrollIntoView({behavior:'smooth',block:'start'});
+  if(!noPush)history.pushState(null,'','#kural/'+n);
 }
+
+function routeHash(h){
+  const m=h.match(/^#kural\/(\d+)$/);if(m){openDetail(parseInt(m[1]),true);return;}
+  const a=h.match(/^#adhi\/(\d+)$/);if(a){tab('browse');showAdhiKurals(parseInt(a[1]),true);return;}
+  if(h==='#browse'){tab('browse');return;}
+  if(h==='#search'){tab('search');return;}
+}
+window.addEventListener('popstate',()=>routeHash(location.hash));
 
 function detailHTML(k){
   const p=pal(k.Number),a=adhin(k.Number);
@@ -631,37 +594,11 @@ function tab(t){
   document.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nt').forEach(n=>n.classList.remove('on'));
   document.getElementById('tp-'+t).classList.add('on');
-  ['home','browse','search','ai'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
+  ['home','browse','search'].forEach((x,i)=>{if(x===t)document.querySelectorAll('.nt')[i].classList.add('on');});
   clearSearch();
 }
 function toggleDark(){isDark=!isDark;document.documentElement.toggleAttribute('data-dark',isDark);document.getElementById('thbtn').innerHTML=isDark?'<i class="ti ti-sun"></i>':'<i class="ti ti-moon-stars"></i>';}
 
-async function aiSend(){
-  const inp=document.getElementById('aiinp'),btn=document.getElementById('aibtn');
-  const q=inp.value.trim();if(!q)return;
-  inp.value='';btn.disabled=true;
-  addAI(q,'u');const lid=addAI('<div class="dots"><span></span><span></span><span></span></div>','b');
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:1000,
-        system:`You are a warm, knowledgeable guide to Thirukkural by Thiruvalluvar. Answer questions about kurals, their meanings, commentators (Parimelazhagar, Mu. Varadarasanar, Solomon Pappaiah, Manakkudavar), themes, and modern relevance. When quoting kurals mention kural numbers. Keep responses 3-5 sentences. Respond in the same language the user writes — Tamil or English.`,
-        messages:[...aiHistory,{role:'user',content:q}]
-      })
-    });
-    const d=await r.json();
-    const reply=d.content?.find(b=>b.type==='text')?.text||'மன்னிக்கவும், மீண்டும் முயற்சிக்கவும்.';
-    removeAI(lid);addAI(reply,'b');
-    aiHistory.push({role:'user',content:q},{role:'assistant',content:reply});
-    if(aiHistory.length>12)aiHistory=aiHistory.slice(-12);
-  }catch(e){removeAI(lid);addAI('Connection error. Please try again.','b');}
-  btn.disabled=false;
-}
-let mid=0;
-function addAI(t,r){const id='m'+(++mid),el=document.createElement('div');el.className='aim '+r;el.id=id;el.innerHTML=t;document.getElementById('aimsgs').appendChild(el);el.scrollIntoView({behavior:'smooth',block:'end'});return id;}
-function removeAI(id){const e=document.getElementById(id);if(e)e.remove();}
-function aiAsk(t){tab('ai');document.getElementById('aiinp').value=t;aiSend();}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
 const FALLBACK=[
