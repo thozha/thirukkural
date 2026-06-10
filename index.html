@@ -107,6 +107,9 @@ html,body{min-height:100%;background:var(--page);font-family:var(--font-ui);colo
 .share-row{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
 .sbtn{font-size:11px;padding:5px 11px;border-radius:14px;cursor:pointer;border:.5px solid var(--border);background:var(--bg2);color:#888;transition:all .13s;display:flex;align-items:center;gap:4px;font-family:var(--font-ui)}
 .sbtn:hover{border-color:var(--saffron);color:var(--saffron)}
+.share-pop{position:absolute;z-index:999;background:var(--surface);border:.5px solid var(--border);border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.12);padding:6px;display:flex;flex-direction:column;gap:2px;min-width:160px}
+.share-pop a,.share-pop button{display:flex;align-items:center;gap:8px;font-size:12px;padding:7px 10px;border-radius:8px;cursor:pointer;color:var(--ink);text-decoration:none;background:none;border:none;font-family:var(--font-ui);width:100%;text-align:left}
+.share-pop a:hover,.share-pop button:hover{background:var(--bg2)}
 .sbtn.ok{background:var(--sage);color:#fff;border-color:var(--sage)}
 
 /* COMMENTARY TABS */
@@ -510,7 +513,7 @@ function detailHTML(k){
     <div class="d-verse"><div class="d-badge"># ${k.Number}</div>${k.Line1}<br>${k.Line2}</div>
     <div class="share-row">
       <button class="sbtn" id="cpb${k.Number}" onclick="copyK(${k.Number},\`${st}\`,this)"><i class="ti ti-copy"></i> Copy</button>
-      <button class="sbtn" onclick="shareK(${k.Number},\`${st}\`)"><i class="ti ti-share"></i> Share</button>
+      <button class="sbtn" onclick="shareK(${k.Number},\`${st}\`,this)"><i class="ti ti-share"></i> Share</button>
       <button class="sbtn" onclick="aiAbout(${k.Number})"><i class="ti ti-message"></i> Ask AI</button>
     </div>
     <div class="ctabs" id="ct${k.Number}">
@@ -541,10 +544,18 @@ function copyK(n,text,btn){
     setTimeout(()=>{btn.classList.remove('ok');btn.innerHTML='<i class="ti ti-copy"></i> Copy';},2000);
   }).catch(()=>{try{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied ✓');}catch(e){}});
 }
-function shareK(n,text){
+function shareK(n,text,btn){
   const url=location.origin+location.pathname+'#kural/'+n;
-  if(navigator.share){navigator.share({title:`Thirukkural ${n}`,text,url});}
-  else{navigator.clipboard.writeText(url).then(()=>showToast('இணைப்பு நகலெடுக்கப்பட்டது ✓')).catch(()=>showToast(url));}
+  if(navigator.share&&/Mobi|Android/i.test(navigator.userAgent)){navigator.share({title:`Thirukkural ${n}`,text,url});return;}
+  const old=document.getElementById('sharepop');if(old)old.remove();
+  const pop=document.createElement('div');pop.id='sharepop';pop.className='share-pop';
+  const wa=encodeURIComponent(text+'\n'+url),tw=encodeURIComponent(`Thirukkural ${n}\n${url}`);
+  pop.innerHTML=`
+    <button onclick="navigator.clipboard.writeText('${url}').then(()=>showToast('இணைப்பு நகலெடுக்கப்பட்டது ✓'));document.getElementById('sharepop').remove()"><i class='ti ti-link'></i> Copy link</button>
+    <a href="https://wa.me/?text=${wa}" target="_blank" onclick="setTimeout(()=>document.getElementById('sharepop')?.remove(),200)"><i class='ti ti-brand-whatsapp'></i> WhatsApp</a>
+    <a href="https://x.com/intent/tweet?text=${tw}" target="_blank" onclick="setTimeout(()=>document.getElementById('sharepop')?.remove(),200)"><i class='ti ti-brand-x'></i> X / Twitter</a>`;
+  btn.style.position='relative';btn.appendChild(pop);
+  setTimeout(()=>document.addEventListener('click',function h(){document.getElementById('sharepop')?.remove();document.removeEventListener('click',h);},{once:true}),10);
 }
 function aiAbout(n){
   const k=KDB.find(x=>x.Number===n);
