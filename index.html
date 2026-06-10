@@ -410,8 +410,6 @@ const ADHI=[
   {n:133,ta:'ஊடலுவகை',en:'Joy of Lovers Quarrels',p:'inbam'}
 ];
 
-// Cache for AI-generated commentaries
-const aiCommCache = {};
 
 function buildDropdown(){
   const sel=document.getElementById('adhisel');
@@ -431,22 +429,26 @@ function parseSearch(v){
   return null;
 }
 
-let KDB=[], curPal='aram', heroN=1, aiHistory=[], isDark=false;
+let KDB=[], CDB={}, curPal='aram', heroN=1, aiHistory=[], isDark=false;
 
 async function loadData(){
   const fill=document.getElementById('lsfill');
-  fill.style.width='30%';
+  fill.style.width='20%';
   try{
-    const r=await fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json');
+    const [r1,r2]=await Promise.all([
+      fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json'),
+      fetch('/commentaries.json')
+    ]);
     fill.style.width='70%';
-    const d=await r.json();
-    KDB=d.kural;
+    const [d1,d2]=await Promise.all([r1.json(),r2.json()]);
+    KDB=d1.kural;
+    CDB=d2;
     fill.style.width='100%';
     setTimeout(()=>{document.getElementById('ls').classList.add('fade');setTimeout(()=>document.getElementById('ls').style.display='none',400);},300);
     renderHome();renderAdhi('aram');buildDropdown();
     showToast('1330 குறள்கள் தயார் ✓');
   }catch(e){
-    KDB=FALLBACK;
+    if(!KDB.length)KDB=FALLBACK;
     document.getElementById('ls').classList.add('fade');
     setTimeout(()=>document.getElementById('ls').style.display='none',400);
     renderHome();renderAdhi('aram');buildDropdown();
@@ -517,8 +519,28 @@ function detailHTML(k){
   const prev=k.Number>1?`<button class="nb" onclick="navK(${k.Number-1})">← குறள் ${k.Number-1}</button>`:`<button class="nb" disabled>← 1</button>`;
   const next=k.Number<1330?`<button class="nb" onclick="navK(${k.Number+1})">குறள் ${k.Number+1} →</button>`:`<button class="nb" disabled>1330 →</button>`;
 
-  // Build commentary tabs — mv, sp, mk always shown; AI tab for extended commentaries
-  const hasMk = k.mk && k.mk.trim().length > 5;
+  const sc=((CDB[k.Number]||{}).commentaries)||{};
+  const get=key=>sc[key]||'';
+
+  // Commentary definitions — order: பரிமேலழகர் first, மணக்குடவர் second, then rest
+  const comms=[
+    {key:'pari', label:'பரிமேலழகர்',     text: get('பரிமேலழகர்'),                       tamil:true},
+    {key:'mk',   label:'மணக்குடவர்',      text: get('மணக்குடவர்') || k.mk || '',          tamil:true},
+    {key:'mv',   label:'மு.வரதராசனார்',   text: get('மு.வரதராசனார்') || k.mv || '',       tamil:true},
+    {key:'sp',   label:'சாலமன் பாப்பையா', text: get('சாலமன் பாப்பையா') || k.sp || '',    tamil:true},
+    {key:'muni', label:'வீ. முனிசாமி',    text: get('திருக்குறளார் வீ. முனிசாமி'),        tamil:true},
+    {key:'vsm',  label:'வ.சுப.மாணிக்கம்', text: get('மூதறிஞர் வ.சுப.மாணிக்கனார்'),      tamil:true},
+    {key:'mul',  label:'முல்லை முத்தையா', text: get('முல்லை பி.எல்.முத்தையா'),           tamil:true},
+    {key:'en',   label:'G.U. Pope',        text: k.explanation||k.Translation||'',          tamil:false},
+  ].filter(c=>c.text && c.text.trim());
+
+  const tabs=comms.map(c=>`<div class="ctab" data-key="${c.key}" onclick="swC(${k.Number},'${c.key}')">${c.label}</div>`).join('');
+  const boxes=comms.map(c=>`
+    <div class="cbox" data-c="${c.key}">
+      <div class="clbl">${c.label}</div>
+      <div class="${c.tamil?'cta':'cen'}">${c.text.replace(/\n\n/g,'<br><br>')}</div>
+      ${c.key==='en'&&k.couplet?`<div class="cen" style="margin-top:.5rem;border-top:.5px solid var(--border);padding-top:.5rem"><em>${k.couplet}</em></div>`:''}
+    </div>`).join('');
 
   return `
     <div class="d-eye">${pn} · ${adhita(a)}</div>
@@ -530,43 +552,11 @@ function detailHTML(k){
       <button class="sbtn" onclick="shareK(${k.Number},\`${st}\`)"><i class="ti ti-share"></i> Share</button>
       <button class="sbtn" onclick="aiAbout(${k.Number})"><i class="ti ti-message"></i> Ask AI</button>
     </div>
-
     <div class="ctabs" id="ct${k.Number}">
-      <div class="ctab on" onclick="swC(${k.Number},'all')">அனைத்தும்</div>
-      <div class="ctab" onclick="swC(${k.Number},'mv')">மு.வ</div>
-      <div class="ctab" onclick="swC(${k.Number},'sp')">சாலமன்</div>
-      ${hasMk?`<div class="ctab" onclick="swC(${k.Number},'mk')">மணக்குடவர்</div>`:''}
-      <div class="ctab" onclick="swC(${k.Number},'en')">Pope</div>
-      <div class="ctab ai-tab" onclick="swC(${k.Number},'ai')">✦ பரிமேலழகர் & மேலும்</div>
+      <div class="ctab on" data-key="all" onclick="swC(${k.Number},'all')">அனைத்தும்</div>
+      ${tabs}
     </div>
-
-    <div id="cv${k.Number}">
-      <div class="cbox" data-c="mv">
-        <div class="clbl">மு. வரதராசனார்</div>
-        <div class="cta">${k.mv||'—'}</div>
-      </div>
-      <div class="cbox" data-c="sp">
-        <div class="clbl">சாலமன் பாப்பையா</div>
-        <div class="cta">${k.sp||'—'}</div>
-      </div>
-      ${hasMk?`<div class="cbox" data-c="mk"><div class="clbl">மணக்குடவர்</div><div class="cta">${k.mk}</div></div>`:''}
-      <div class="cbox" data-c="en">
-        <div class="clbl">Rev. G.U. Pope (English)</div>
-        <div class="cen">${k.explanation||k.Translation||'—'}</div>
-        ${k.couplet?`<div class="cen" style="margin-top:.5rem;border-top:.5px solid var(--border);padding-top:.5rem"><em>${k.couplet}</em></div>`:''}
-      </div>
-      <div class="cbox ai-box-c" data-c="ai" id="aicomm${k.Number}" style="display:none">
-        <div class="clbl">✦ பரிமேலழகர் · முனிசாமி · வ.சுப.மாணிக்கம் <span class="clbl-ai">AI</span></div>
-        <div id="aicomm-body${k.Number}">
-          <div class="ai-comm-wrap">
-            <div style="font-size:12px;color:#888;margin-bottom:.75rem;font-family:var(--font-k)">பரிமேலழகர், திரு முனிசாமி மற்றும் வ.சுப.மாணிக்கம் உரைகள் AI மூலம் பெற</div>
-            <button class="ai-comm-btn" onclick="loadAIComm(${k.Number}, '${k.Line1.replace(/'/g,"\\'")}', '${k.Line2.replace(/'/g,"\\'")}')">
-              <i class="ti ti-sparkles"></i> உரை பெறுக
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="cv${k.Number}">${boxes}</div>
     <div class="ctrans"><i class="ti ti-language"></i> ${k.transliteration1||''} / ${k.transliteration2||''}</div>
     <div class="navbtns">${prev}${next}</div>`;
 }
@@ -578,75 +568,10 @@ function navK(n){
 }
 
 function swC(n,f){
-  const tabs=document.querySelectorAll(`#ct${n} .ctab`);
-  const keys=['all','mv','sp','mk','en','ai'];
-  // remove mk if not present
-  const boxes=document.querySelectorAll(`#cv${n} .cbox`);
-  tabs.forEach(t=>t.classList.remove('on'));
-  // find matching tab
-  const allKeys=['all','mv','sp','mk','en','ai'];
-  let ti=allKeys.indexOf(f);
-  if(ti>=0&&tabs[ti>4?tabs.length-1:ti])tabs[f==='all'?0:f==='mv'?1:f==='sp'?2:f==='mk'?3:f==='en'?tabs.length-2:tabs.length-1].classList.add('on');
-  // fallback: mark first tab if all
-  if(f==='all')tabs[0].classList.add('on');
-  boxes.forEach(b=>{
-    const c=b.dataset.c;
-    b.style.display=(f==='all'||c===f)?'block':'none';
-  });
+  document.querySelectorAll(`#ct${n} .ctab`).forEach(t=>t.classList.toggle('on',t.dataset.key===f));
+  document.querySelectorAll(`#cv${n} .cbox`).forEach(b=>b.style.display=(f==='all'||b.dataset.c===f)?'':'none');
 }
 
-async function loadAIComm(num, line1, line2){
-  if(aiCommCache[num]){
-    document.getElementById('aicomm-body'+num).innerHTML=aiCommCache[num];
-    return;
-  }
-  const btn=document.querySelector(`#aicomm-body${num} .ai-comm-btn`);
-  if(btn){btn.disabled=true;btn.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';}
-
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:1200,
-        system:`You are a Tamil classical literature scholar. For the given Thirukkural couplet, provide commentary in the style of three classical commentators. Respond ONLY in this exact format with no preamble:
-
-பரிமேலழகர்: [Commentary in Tamil, 2-3 sentences in classical style explaining the meaning deeply]
-
-திரு. முனிசாமி: [Commentary in Tamil, 1-2 sentences, practical and clear]
-
-வ.சுப.மாணிக்கம்: [Commentary in Tamil, 1-2 sentences, analytical style]
-
-Keep each commentary authentic to that scholar's known style and approach. Write entirely in Tamil.`,
-        messages:[{role:'user',content:`குறள் ${num}:\n${line1}\n${line2}`}]
-      })
-    });
-    const d=await r.json();
-    const text=d.content?.find(b=>b.type==='text')?.text||'';
-
-    // Parse the three commentaries
-    const sections=[
-      {label:'பரிமேலழகர்',key:'பரிமேலழகர்:'},
-      {label:'திரு. முனிசாமி',key:'திரு. முனிசாமி:'},
-      {label:'வ.சுப.மாணிக்கம்',key:'வ.சுப.மாணிக்கம்:'}
-    ];
-
-    let html='';
-    sections.forEach((s,i)=>{
-      const start=text.indexOf(s.key);
-      const end=i<sections.length-1?text.indexOf(sections[i+1].key):text.length;
-      const content=start>=0?text.slice(start+s.key.length,end).trim():'—';
-      html+=`<div style="margin-bottom:.75rem;padding-bottom:.75rem;${i<2?'border-bottom:.5px solid rgba(232,146,42,.2)':''}">
-        <div style="font-size:10px;font-weight:600;color:var(--saffron);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;font-family:var(--font-ui)">${s.label}</div>
-        <div style="font-family:var(--font-k);font-size:.875rem;line-height:1.8;color:var(--ink)">${content}</div>
-      </div>`;
-    });
-
-    aiCommCache[num]=html;
-    document.getElementById('aicomm-body'+num).innerHTML=html;
-  }catch(e){
-    document.getElementById('aicomm-body'+num).innerHTML='<div style="color:#888;font-size:12px;padding:.5rem">Error loading. Please try again.</div>';
-  }
-}
 
 function copyK(n,text,btn){
   navigator.clipboard.writeText(text).then(()=>{
