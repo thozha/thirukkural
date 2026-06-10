@@ -581,7 +581,12 @@ function copyK(n,text,btn){
   }).catch(()=>{try{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied ✓');}catch(e){}});
 }
 function shareK(n,text){if(navigator.share)navigator.share({title:`Thirukkural ${n}`,text});else copyK(n,text,{classList:{add:()=>{},remove:()=>{}},innerHTML:''});}
-function aiAbout(n){tab('ai');document.getElementById('aiinp').value=`குறள் ${n} பொருளும் விளக்கமும் — Explain kural ${n} in detail`;aiSend();}
+function aiAbout(n){
+  const k=KDB.find(x=>x.Number===n);
+  const verse=k?`${k.Line1} ${k.Line2}`:'';
+  const q=`Thirukkural ${n}: "${verse}" — Explain the meaning, context and relevance of this kural in detail.`;
+  window.open('https://chatgpt.com/?q='+encodeURIComponent(q),'_blank');
+}
 
 function onSearch(v){
   document.getElementById('sclear').classList.toggle('vis',v.length>0);
