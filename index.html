@@ -428,7 +428,13 @@ function kcHTML(k,oc){
 function renderHome(){
   const picks=[1,71,391,1081].map(n=>KDB.find(k=>k.Number===n)).filter(Boolean);
   document.getElementById('homelist').innerHTML=picks.map(k=>kcHTML(k,`openDetail(${k.Number})`)).join('');
-  if(KDB.length)setHero(KDB[Math.floor(Math.random()*KDB.length)]);
+  if(KDB.length){
+    const today=new Date().toISOString().slice(0,10);
+    const saved=localStorage.getItem('kotd');
+    let n=saved&&JSON.parse(saved).date===today?JSON.parse(saved).n:null;
+    if(!n){n=KDB[Math.floor(Math.random()*KDB.length)].Number;localStorage.setItem('kotd',JSON.stringify({date:today,n}));}
+    setHero(KDB.find(k=>k.Number===n)||KDB[0]);
+  }
 }
 function setHero(k){heroN=k.Number;document.getElementById('hg').textContent=k.Number;document.getElementById('hk').innerHTML=k.Line1+'<br>'+k.Line2;document.getElementById('hen').textContent=k.explanation||k.Translation||'';document.getElementById('hm').textContent=`குறள் ${k.Number} · ${adhita(adhin(k.Number))}`;}
 function randHero(){if(KDB.length)setHero(KDB[Math.floor(Math.random()*KDB.length)])}
