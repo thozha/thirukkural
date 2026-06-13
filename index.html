@@ -383,7 +383,7 @@ function parseSearch(v){
   return null;
 }
 
-let KDB=[], CDB={}, curPal='aram', heroN=1, isDark=false;
+let KDB=[], CDB={}, curPal='aram', heroN=1, isDark=false, curKN=null;
 
 async function loadData(){
   const fill=document.getElementById('lsfill');
@@ -405,7 +405,7 @@ async function loadData(){
     renderHome();renderAdhi('aram');buildDropdown();
     if(location.hash)routeHash(location.hash);
   }
-  fetch('/commentaries.json').then(r=>r.json()).then(d=>{CDB=d;}).catch(()=>{});
+  fetch('/commentaries.json').then(r=>r.json()).then(d=>{CDB=d;if(curKN)navK(curKN);}).catch(()=>{});
 }
 
 function patchKurals(kurals){
@@ -478,11 +478,11 @@ function showAdhiKurals(n,noPush){
 }
 function bkToAdhi(){show('brw-adhi');hide('brw-klist');hide('brw-detail');history.pushState(null,'','#browse');}
 function bkToList(){show('brw-klist');hide('brw-detail');}
-function showBrwDetail(n){const k=KDB.find(x=>x.Number===n);if(!k)return;document.getElementById('bdc').innerHTML=detailHTML(k);hide('brw-klist');show('brw-detail');}
+function showBrwDetail(n){const k=KDB.find(x=>x.Number===n);if(!k)return;curKN=n;document.getElementById('bdc').innerHTML=detailHTML(k);hide('brw-klist');show('brw-detail');}
 
 function openDetail(n,noPush){
   const k=KDB.find(x=>x.Number===n);if(!k)return;
-  tab('browse');hide('brw-adhi');hide('brw-klist');show('brw-detail');
+  curKN=n;tab('browse');hide('brw-adhi');hide('brw-klist');show('brw-detail');
   document.getElementById('bdc').innerHTML=detailHTML(k);
   document.getElementById('brw-detail').scrollIntoView({behavior:'smooth',block:'start'});
   if(!noPush)history.pushState(null,'','#kural/'+n);
@@ -550,7 +550,7 @@ function detailHTML(k){
 
 function navK(n){
   const k=KDB.find(x=>x.Number===n);if(!k)return;
-  document.getElementById('bdc').innerHTML=detailHTML(k);
+  curKN=n;document.getElementById('bdc').innerHTML=detailHTML(k);
   document.getElementById('brw-detail').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
