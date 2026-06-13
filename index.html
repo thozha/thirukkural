@@ -392,20 +392,35 @@ async function loadData(){
     const r1=await fetch('https://raw.githubusercontent.com/tk120404/thirukkural/master/thirukkural.json');
     fill.style.width='60%';
     const d1=await r1.json();
-    KDB=d1.kural;
+    KDB=patchKurals(d1.kural);
     fill.style.width='100%';
     setTimeout(()=>{document.getElementById('ls').classList.add('fade');setTimeout(()=>document.getElementById('ls').style.display='none',400);},300);
     renderHome();renderAdhi('aram');buildDropdown();
     if(location.hash)routeHash(location.hash);
     showToast('1330 குறள்கள் தயார் ✓');
   }catch(e){
-    if(!KDB.length)KDB=FALLBACK;
+    if(!KDB.length)KDB=patchKurals(FALLBACK);
     document.getElementById('ls').classList.add('fade');
     setTimeout(()=>document.getElementById('ls').style.display='none',400);
     renderHome();renderAdhi('aram');buildDropdown();
     if(location.hash)routeHash(location.hash);
   }
   fetch('/commentaries.json').then(r=>r.json()).then(d=>{CDB=d;}).catch(()=>{});
+}
+
+function patchKurals(kurals){
+  const fixes={
+    483:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    599:{Line2:k=>k.Line2.replace('஦வ்ருஉம்','வெரூஉம்')},
+    851:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    913:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    957:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    1118:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    1192:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+    1321:{Line2:k=>k.Line2.replace(/஧/g,'ி')},
+  };
+  kurals.forEach(k=>{const f=fixes[k.Number];if(f){if(f.Line1)k.Line1=f.Line1(k);if(f.Line2)k.Line2=f.Line2(k);}});
+  return kurals;
 }
 
 function pal(n){return n<=380?'aram':n<=1080?'porul':'inbam'}
